@@ -22,18 +22,40 @@ const hf = new HfInference(process.env.HF_TOKEN)
 
 // console.log(repsonse)
 
-const textToTranslate = "It is an exciting time to be an AI engineer"
+// const textToTranslate = "It is an exciting time to be an AI engineer"
 
-const textTranslationResponse = await hf.translation({
-    model: 'facebook/mbart-large-50-many-to-many-mmt',
-    inputs: textToTranslate,
+// const textTranslationResponse = await hf.translation({
+//     model: 'facebook/mbart-large-50-many-to-many-mmt',
+//     inputs: textToTranslate,
+//     parameters: {
+//         src_lang: "en_XX",
+//         tgt_lang: "es_XX"
+//     }
+
+// })
+
+// const translation = textTranslationResponse.translation_text
+// console.log("\ntranslation:\n")
+// console.log(translation)
+
+const model = "ghoskno/Color-Canny-Controlnet-model"
+
+const oldImageUrl = "/old-photo.jpeg"
+const oldImageResponse = await fetch(oldImageUrl)
+const oldImageBlob = await oldImageResponse.blob()
+
+const prompt = `An elderly couple walks together on a gravel path with green grass and trees on each side. Wearing neutral-colored clothes, they face away from the camera as they carry their bags.`
+
+const newImageBlob = await hf.imageToImage({
+    model: model,
+    inputs: oldImageBlob,
     parameters: {
-        src_lang: "en_XX",
-        tgt_lang: "es_XX"
+        prompt: prompt,
+        negative_prompt: "black and white photo. text, bad anatomy, blurry, low quality",
+        strength: 0.85 
     }
-
 })
 
-const translation = textTranslationResponse.translation_text
-console.log("\ntranslation:\n")
-console.log(translation)
+const newImageBase64 = await blobToBase64(newImageBlob)
+const newImage = document.getElementById("new-image")
+newImage.src = newImageBase64
