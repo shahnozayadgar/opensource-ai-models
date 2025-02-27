@@ -1,0 +1,14 @@
+{
+  "name": "Scrim-s06c53f",
+  "description": "https://scrimba.com/open-source-ai-models-c0lp0ta5gp/~0zlq",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vite": "latest"
+  },
+  "devDependencies": {}
+}
